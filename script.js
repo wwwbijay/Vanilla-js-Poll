@@ -25,7 +25,7 @@ pollDOM.answers.innerHTML = poll.answers
   .join("");
 
 function markAnswer(i) {
-  pollselectedAnswer = +i;
+  poll.selectedAnswer = +i;
   try {
     document
       .querySelector(".poll .answers .answer.selected")
@@ -38,21 +38,20 @@ function markAnswer(i) {
 }
 
 function showResults() {
-  let answer = document.querySelector(".poll .answers .answer");
+  let answer = document.querySelectorAll(".poll .answers .answer");
 
-  for (let i = 0; i < answers.length; i++) {
+  for (let i = 0; i < poll.answers.length; i++) {
+    console.log(i == poll.selectedAnswer);
     let percentage = 0;
     if (i == poll.selectedAnswer) {
       percentage = Math.round(
-        (poll.answerWeight[i] * 100) / (poll.pollCount + 1)
+        (poll.answerWeight[i] * 100) / poll.pollCount + 1
       );
     } else {
-      percentage = Math.round(
-        (poll.answerWeight[i] * 100) / (poll.pollCount + 1)
-      );
+      percentage = Math.round((poll.answerWeight[i] * 100) / poll.pollCount);
     }
 
-    answers[i].querySelector(".percentage-bar").style.width = percentage + "%";
-    answers[i].querySelector(".percentage-value").innerText = percentage + "%";
+    answer[i].querySelector(".percentage-bar").style.width = percentage + "%";
+    answer[i].querySelector(".percentage-value").innerText = percentage + "%";
   }
 }
